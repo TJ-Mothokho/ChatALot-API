@@ -26,4 +26,8 @@
     <PackageReference Include="System.Security.Principal" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChatALot.Data\ChatALot.Data.csproj" />
+  </ItemGroup>
+
 </Project>
