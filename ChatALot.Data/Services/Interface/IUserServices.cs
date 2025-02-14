@@ -15,5 +15,8 @@ namespace ChatALot.Data.Services.Interface
         Task<string> AddUser(CreateUserRequest request);
         Task<string> UpdateUser(UpdateUserRequest request);
         Task<string> DeleteUser(DeleteUserRequest request);
+
+        //Auth
+        Task<ReadUserRequest> Login(LoginRequest request);
     }
 }

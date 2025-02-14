@@ -69,7 +69,8 @@ namespace ChatALot.Data.Services.Implementation
                     {
                         Id=user.Id,
                         Username = user.Username,
-                        Email = user.Email
+                        Email = user.Email,
+                        Role = user.Role,
                     };
 
                     response.Add(userResponse);
@@ -95,7 +96,9 @@ namespace ChatALot.Data.Services.Implementation
                 {
                     response.Id = request.Id;
                     response.Username = request.Username;
-                    response.Email = request.Email;                }
+                    response.Email = request.Email; 
+                    response.Role = request.Role;
+                }
                 else
                 {
                     throw new NullReferenceException();
@@ -124,6 +127,35 @@ namespace ChatALot.Data.Services.Implementation
                 return response;
             }
             catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<ReadUserRequest> Login(LoginRequest request)
+        {
+            try
+            {
+                var user = new User
+                {
+                    Username = request.Username,
+                    Email = request.Username,
+                    Password = request.Password
+                };
+
+                var response = await _userRepository.GetByUsernameAndPassword(user);
+
+                var loggedInUser = new ReadUserRequest
+                {
+                    Id = response.Id,
+                    Username = response.Username,
+                    Email = response.Email,
+                    Role = response.Role,
+                };
+
+                return loggedInUser;
+            }
+            catch
             {
                 throw;
             }

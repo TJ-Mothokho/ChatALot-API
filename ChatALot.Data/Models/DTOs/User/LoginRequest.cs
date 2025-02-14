@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChatALot.Data.Models.DTOs.User
 {
-    public class ReadUserRequest
+    public class LoginRequest
     {
-        public Guid Id { get; set; }
         public string Username { get; set; }
-        public string Email { get; set; }
-        public string Role { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace ChatALot.Data.Models.Domains
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string Role { get; set; } = "user";
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

@@ -85,5 +85,23 @@ namespace ChatALot.Data.Repository.Implementation
                 throw;
             }
         }
+
+        //Auth
+        public async Task<User> GetByUsernameAndPassword(User user)
+        {
+            try
+            {
+                var response = await _context.Users
+                    .Where(person => person.Username == user.Username || person.Email == user.Email && person.Password == user.Password && person.Status == "Active")
+                    .FirstOrDefaultAsync();
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                throw;
+            }
+        }
     }
 }

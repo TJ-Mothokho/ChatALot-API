@@ -9,5 +9,8 @@ namespace ChatALot.Data.Repository.Interface
         Task<string> AddAsync(User request);
         Task<string> UpdateAsync(User request);
         Task<string> DeleteAsync(User request);
+
+        //Auth
+        Task<User> GetByUsernameAndPassword(User user);
     }
 }
