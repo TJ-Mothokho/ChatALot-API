@@ -1,4 +1,8 @@
 using ChatALot.Data.Context;
+using ChatALot.Data.Repository.Implementation;
+using ChatALot.Data.Repository.Interface;
+using ChatALot.Data.Services.Implementation;
+using ChatALot.Data.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Serilog;
@@ -11,6 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+//Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+
+//Services
+builder.Services.AddScoped<IUserServices, UserServices>();
+builder.Services.AddScoped<IMessageServices, MessageServices>();
 
 var connectionString = builder.Configuration.GetConnectionString("LocalConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
