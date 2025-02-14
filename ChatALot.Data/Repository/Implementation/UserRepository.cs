@@ -23,13 +23,15 @@ namespace ChatALot.Data.Repository.Implementation
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Where(user => user.Status == "Active")
+                .ToListAsync();
         }
 
         public async Task<User> GetByIdAsync(Guid id)
         {
             return await _context.Users
-                .Where(user => user.Id == id)
+                .Where(user => user.Id == id && user.Status == "Active")
                 .FirstOrDefaultAsync();
         }
 

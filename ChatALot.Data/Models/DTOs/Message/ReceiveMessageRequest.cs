@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChatALot.Data.Models.DTOs.Message
 {
-    internal class ReceiveMessageRequest
+    public class ReceiveMessageRequest
     {
         public Guid Id { get; set; }
         public Guid SenderId { get; set; } 
