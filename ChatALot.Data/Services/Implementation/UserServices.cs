@@ -132,7 +132,7 @@ namespace ChatALot.Data.Services.Implementation
             }
         }
 
-        public async Task<ReadUserRequest> Login(LoginRequest request)
+        public async Task<LoginResponse> Login(LoginRequest request)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace ChatALot.Data.Services.Implementation
 
                 var response = await _userRepository.GetByUsernameAndPassword(user);
 
-                var loggedInUser = new ReadUserRequest
+                var loggedInUser = new LoginResponse
                 {
                     Id = response.Id,
                     Username = response.Username,

@@ -53,8 +53,8 @@ namespace ChatALot.API.Controllers
             }
         }
 
-        [HttpGet("Login")]
-        public async Task<IActionResult> Login(LoginRequest request)
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             try
             {
@@ -72,6 +72,8 @@ namespace ChatALot.API.Controllers
 
                     var accessToken = IssueToken(response);
                     var refreshToken = GenerateRefreshToken();
+                    response.Token = accessToken;
+                    response.RefreshToken = refreshToken;
 
                     _refreshToken[response.Id.ToString()] = refreshToken;
 
@@ -98,7 +100,7 @@ namespace ChatALot.API.Controllers
             if (userId == null || !_refreshToken.ContainsKey(userId) || _refreshToken[userId] != request.RefreshToken)
                 return Unauthorized("Invalid Refresh Token");
 
-            var user = new ReadUserRequest
+            var user = new LoginResponse
             {
                 Id = Guid.Parse(userId),
                 Username = principal.Identity.Name,
@@ -128,7 +130,7 @@ namespace ChatALot.API.Controllers
             return Ok("User logged out successfully.");
         }
 
-        private string IssueToken(ReadUserRequest user)
+        private string IssueToken(LoginResponse user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
