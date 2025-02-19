@@ -11,6 +11,6 @@ namespace ChatALot.Data.Services.Interface
     public interface IMessageServices
     {
         Task<bool> SendMessage(SendMessageRequest message);
-        Task<IEnumerable<ReceiveMessageRequest>> ReceiveMessage(Guid id);
+        Task<IEnumerable<ReceiveMessageRequest>> ReceiveMessage(Guid user1, Guid user2);
     }
 }

@@ -10,6 +10,6 @@ namespace ChatALot.Data.Repository.Interface
     public interface IMessageRepository
     {
         Task<bool> SendAsync(Message message);
-        Task<IEnumerable<Message>> ReceiveAsync(Guid id);
+        Task<IEnumerable<Message>> ReceiveAsync(Guid user1, Guid user2);
     }
 }

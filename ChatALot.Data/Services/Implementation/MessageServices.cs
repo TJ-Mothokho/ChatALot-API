@@ -19,11 +19,11 @@ namespace ChatALot.Data.Services.Implementation
             _messageRepository = messageRepository;
         }
 
-        public async Task<IEnumerable<ReceiveMessageRequest>> ReceiveMessage(Guid id)
+        public async Task<IEnumerable<ReceiveMessageRequest>> ReceiveMessage(Guid user1, Guid user2)
         {
             try
             {
-                var request = await _messageRepository.ReceiveAsync(id);
+                var request = await _messageRepository.ReceiveAsync(user1, user2);
 
                 var response = new List<ReceiveMessageRequest>();
 
