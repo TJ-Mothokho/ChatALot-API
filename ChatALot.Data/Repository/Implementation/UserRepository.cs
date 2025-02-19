@@ -59,7 +59,7 @@ namespace ChatALot.Data.Repository.Implementation
                 _context.Users.Update(request);
                 await _context.SaveChangesAsync();
 
-                Log.Information($"{request.Id} update profile!!");
+                Log.Information($"{request.Id} updated profile!!");
                 return "Account updated successfully";
             }
             catch (Exception ex)

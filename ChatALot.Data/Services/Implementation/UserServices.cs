@@ -26,7 +26,7 @@ namespace ChatALot.Data.Services.Implementation
                     Password = request.Password,
                     Status = "Active"
                 };
-                
+
                 var response = await _userRepository.AddAsync(user);
                 return response;
             }
@@ -36,17 +36,22 @@ namespace ChatALot.Data.Services.Implementation
             }
         }
 
-        public async Task<string> DeleteUser(DeleteUserRequest request)
+        public async Task<string> DeleteUser(Guid id)
         {
             try
             {
-                var user = new User
-                {
-                    Id = request.Id,
-                    Status = "Active"
-                };
+                var request = await _userRepository.GetByIdAsync(id);
 
-                var response = await _userRepository.DeleteAsync(user);
+                if (request is not null)
+                {
+                    request.Status = "Inactive";
+                }
+                else
+                {
+                    throw new InvalidOperationException();
+                }
+
+                var response = await _userRepository.DeleteAsync(request);
                 return response;
             }
             catch (Exception ex)
@@ -55,7 +60,7 @@ namespace ChatALot.Data.Services.Implementation
             }
         }
 
-        public  async Task<IEnumerable<ReadUserRequest>> GetAllUsers()
+        public async Task<IEnumerable<ReadUserRequest>> GetAllUsers()
         {
             try
             {
@@ -63,11 +68,11 @@ namespace ChatALot.Data.Services.Implementation
 
                 var response = new List<ReadUserRequest>();
 
-                foreach(var user in request)
+                foreach (var user in request)
                 {
                     var userResponse = new ReadUserRequest
                     {
-                        Id=user.Id,
+                        Id = user.Id,
                         Username = user.Username,
                         Email = user.Email,
                         Role = user.Role,
@@ -96,7 +101,7 @@ namespace ChatALot.Data.Services.Implementation
                 {
                     response.Id = request.Id;
                     response.Username = request.Username;
-                    response.Email = request.Email; 
+                    response.Email = request.Email;
                     response.Role = request.Role;
                 }
                 else
@@ -116,12 +121,17 @@ namespace ChatALot.Data.Services.Implementation
         {
             try
             {
-                var user = new User
+                var user = await _userRepository.GetByIdAsync(request.Id);
+
+                if (user is not null)
                 {
-                    Id = request.Id,
-                    Username = request.Username,
-                    Password = request.Password
-                };
+                    user.Username = request.Username;
+                    user.Password = request.Password;
+                }
+                else
+                {
+                    throw new ArgumentNullException();
+                }
 
                 var response = await _userRepository.UpdateAsync(user);
                 return response;
@@ -160,7 +170,7 @@ namespace ChatALot.Data.Services.Implementation
 
                 return loggedInUser;
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 throw;
             }

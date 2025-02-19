@@ -14,7 +14,7 @@ namespace ChatALot.Data.Services.Interface
         Task<ReadUserRequest> GetByUserId(Guid id);
         Task<string> AddUser(CreateUserRequest request);
         Task<string> UpdateUser(UpdateUserRequest request);
-        Task<string> DeleteUser(DeleteUserRequest request);
+        Task<string> DeleteUser(Guid id);
 
         //Auth
         Task<LoginResponse> Login(LoginRequest request);
