@@ -145,6 +145,11 @@ namespace ChatALot.Data.Services.Implementation
 
                 var response = await _userRepository.GetByUsernameAndPassword(user);
 
+                if (response is null)
+                {
+                    throw new NullReferenceException();
+                }
+
                 var loggedInUser = new LoginResponse
                 {
                     Id = response.Id,
@@ -155,7 +160,7 @@ namespace ChatALot.Data.Services.Implementation
 
                 return loggedInUser;
             }
-            catch
+            catch(Exception ex) 
             {
                 throw;
             }

@@ -130,6 +130,39 @@ namespace ChatALot.API.Controllers
             return Ok("User logged out successfully.");
         }
 
+        [HttpPost("IsLoggedIn")]
+        public IActionResult IsLoggedIn([FromBody] string accessToken)
+        {
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+                return BadRequest(false); // No token provided, user is not logged in
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
+
+            try
+            {
+                tokenHandler.ValidateToken(accessToken, new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = _config["Jwt:Issuer"],
+                    ValidAudience = _config["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateLifetime = true // Ensures token is not expired
+                }, out SecurityToken validatedToken);
+
+                return Ok(true); // Token is valid, user is logged in
+            }
+            catch
+            {
+                return Ok(false); // Token is invalid or expired, user is not logged in
+            }
+        }
+
+
         private string IssueToken(LoginResponse user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
