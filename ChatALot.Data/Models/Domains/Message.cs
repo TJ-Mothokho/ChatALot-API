@@ -12,12 +12,8 @@ namespace ChatALot.Data.Models.Domains
     {
         [Key]
         public Guid Id { get; set; }
-
-        [ForeignKey(nameof(Id))]
-        public Guid SenderId { get; set; } // Foreign key to User
-
-        [ForeignKey(nameof(Id))]
-        public Guid ReceiverId { get; set; } // Foreign key to User
+        public Guid SenderId { get; set; }
+        public Guid ReceiverId { get; set; }
         public string Content { get; set; }
         public DateTime SentAt { get; set; } = DateTime.UtcNow;
 

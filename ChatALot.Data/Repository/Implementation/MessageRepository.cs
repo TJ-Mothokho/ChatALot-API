@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ChatALot.Data.Repository.Implementation
 {
-    public class MessageRepository : Hub, IMessageRepository
+    public class MessageRepository : IMessageRepository
     {
         private readonly AppDbContext _context;
 
@@ -28,8 +28,6 @@ namespace ChatALot.Data.Repository.Implementation
             {
                 await _context.Messages.AddAsync(message);
                 await _context.SaveChangesAsync();
-
-                await Clients.All.SendAsync("ReceiveMessage", message.SenderId, message.ReceiverId, message.Content);
 
                 Log.Information($"{message.SenderId} texted {message.ReceiverId}");
                 return true;

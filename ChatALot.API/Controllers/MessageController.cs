@@ -1,5 +1,5 @@
-﻿using ChatALot.Data.Models.DTOs.Message;
-using ChatALot.Data.Services;
+﻿using ChatALot.API.Hubs;
+using ChatALot.Data.Models.DTOs.Message;
 using ChatALot.Data.Services.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +38,7 @@ namespace ChatALot.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpPost("Send")]
         public async Task<IActionResult> SendMessage([FromBody] SendMessageRequest request)

@@ -2,11 +2,6 @@
 using ChatALot.Data.Models.DTOs.Message;
 using ChatALot.Data.Repository.Interface;
 using ChatALot.Data.Services.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatALot.Data.Services.Implementation
 {

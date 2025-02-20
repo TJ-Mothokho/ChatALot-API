@@ -10,7 +10,7 @@ using Serilog;
 using Serilog.AspNetCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using ChatALot.Data.Services;
+using ChatALot.API.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
