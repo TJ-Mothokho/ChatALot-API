@@ -21,7 +21,7 @@ namespace ChatALot.API.Controllers
             _hubContext = hubContext;
         }
 
-        [HttpGet("messages/{senderID}/{receiverID}")]
+        [HttpGet("{senderID}/{receiverID}")]
         public async Task<IActionResult> ReceiveMessage(Guid senderID, Guid receiverID)
         {
             try

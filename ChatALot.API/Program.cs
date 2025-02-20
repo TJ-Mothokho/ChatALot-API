@@ -74,19 +74,32 @@ builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyPolicy", policy =>
-    policy.AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader());
+    {
+        policy.WithOrigins("http://localhost:5173") // Allow frontend
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials(); // If using authentication
+    });
 });
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("MyPolicy", policy =>
+//    policy.AllowAnyOrigin()
+//    .AllowAnyMethod()
+//    .AllowAnyHeader());
+//});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+app.UseCors("MyPolicy");
 
 app.UseRouting();
 
@@ -97,8 +110,6 @@ app.UseEndpoints(endpoints =>
 });
 
 app.UseSerilogRequestLogging();
-
-app.UseCors("MyPolicy");
 
 app.UseHttpsRedirection();
 
